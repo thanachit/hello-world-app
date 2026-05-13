@@ -26,7 +26,7 @@ CLI default output format (json if not specified) [None]:
 Profile name [DeveloperAccess-<accountid>]: tg-dev 
 ```
 
-> **Tip:** Name the profile `default` so you don't need `--profile` on every command. Otherwise, use a custom name `dev` and pass `--profile dev` to all commands.
+> **Tip:** Name the profile `default` so you don't need `--profile` on every command. Otherwise, use a custom name `tg-dev` and pass `--profile tg-dev` to all commands.
 
 Verify your configuration:
 ```
