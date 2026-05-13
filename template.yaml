@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Deploy pre-built React ZIP to Amplify Hosting
+
+Parameters:
+  AppName:
+    Type: String
+    Description: Unique Amplify app name (append a suffix to ensure uniqueness, e.g. hello-world-app-20260513)
+    Default: hello-world-app
+  ApplicationName:
+    Type: String
+    Default: hello world
+  FunctionCode:
+    Type: String
+    Default: 5A
+  ITSupport:
+    Type: String
+    Default: bank
+
+Resources:
+  AmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: !Ref AppName
+      Platform: WEB
+      Tags:
+        - Key: application_name
+          Value: !Ref ApplicationName
+        - Key: function_code
+          Value: !Ref FunctionCode
+        - Key: it_support
+          Value: !Ref ITSupport
+
+  AmplifyBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt AmplifyApp.AppId
+      BranchName: main
+      EnableAutoBuild: false
+      Tags:
+        - Key: application_name
+          Value: !Ref ApplicationName
+        - Key: function_code
+          Value: !Ref FunctionCode
+        - Key: it_support
+          Value: !Ref ITSupport
+
+Outputs:
+  AppId:
+    Description: Amplify App ID - pass this to deploy.ps1
+    Value: !GetAtt AmplifyApp.AppId
+  SiteUrl:
+    Value: !Sub "https://main.${AmplifyApp.DefaultDomain}"
